@@ -128,7 +128,7 @@ public class Solution {
         return sb.toString();
     }
     
-    //detailed string representation with job timings
+    //detailed string representation with job timings thks copilot :)
     public String toDetailedString() {
         StringBuilder sb = new StringBuilder();
         sb.append("=== Solution Details ===\n");
