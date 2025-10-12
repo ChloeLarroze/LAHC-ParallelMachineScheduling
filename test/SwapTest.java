@@ -1,14 +1,17 @@
 package test;
 
+import algo.neighborhood.*;
 import domain.*;
 import solution.*;
-import algo.neighborhood.*;
 //import java.util.Random; //useless here since we fixed the seed
 
 
 public class SwapTest {
     
     public static void main(String[] args) {
+        System.out.println("╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║         TEST - SWAP                                        ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
         
         //instance
         Instance instance = createSimpleInstance();

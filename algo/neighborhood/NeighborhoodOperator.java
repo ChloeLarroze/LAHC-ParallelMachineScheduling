@@ -9,3 +9,4 @@ public interface NeighborhoodOperator {
     //on applique l'opérateur pour générer une solution voisine.
     Solution apply(Solution solution);
 }
+
