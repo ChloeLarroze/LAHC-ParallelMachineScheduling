@@ -22,7 +22,7 @@ import solution.*;
 
 public class BIBAHeuristic implements Heuristic {
     
-    @Override
+    @Override // bc of interface !!!!! FIX DON'T FORGET IT 
     public Solution buildInitialSolution(Instance instance) 
     {
         Solution solution = new Solution(instance);
@@ -37,7 +37,7 @@ public class BIBAHeuristic implements Heuristic {
         //on assign itérativement chaque job
         while (!remainingJobs.isEmpty()) 
         {
-            InsertionMove bestMove = findBestInsertion(remainingJobs, solution);
+            InsertionMove bestMove = findBestInsertion(remainingJobs, solution); //helper function to find the best insertion
             
             if (bestMove == null) //TODO : faire avec une exception custom ?
             {

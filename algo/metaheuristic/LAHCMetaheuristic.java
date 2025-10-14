@@ -1,12 +1,12 @@
 package algo.metaheuristic;
 
 
-import  domain.*;
-import  solution.*;
 import  algo.heuristic.*;
 import  algo.localsearch.*;
 import  algo.neighborhood.*;
-import java.util.*;
+import  domain.*;
+import  java.util.*;
+import solution.*;
 
 
 
@@ -32,7 +32,7 @@ public class LAHCMetaheuristic {
     
     //default constructor with heuristic and default history length
     public LAHCMetaheuristic(Heuristic heuristic) {
-        this(heuristic, 30); // LH = 30 selon le papier
+        this(heuristic, 30); // LH = 30 selon le papier //PARAM  TODO ajustable ?
     }
     
     //constructor with heuristic and history length
@@ -132,5 +132,23 @@ public class LAHCMetaheuristic {
                         100.0 * (initialMakespan - bestSolution.getMakespan()) / initialMakespan);
         
         return bestSolution;
+    }
+
+    //setters 
+
+    public void setMaxIterations(int maxIterations) {
+        this.maxIterations = maxIterations;
+    }
+
+    public void setNonImprovementLimit(int limit) {
+        this.nonImprovementLimit = limit;
+    }
+
+    public Solution getBestSolution() {
+        return bestSolution;
+    }
+
+    public Solution getCurrentSolution() {
+        return currentSolution;
     }
 }
