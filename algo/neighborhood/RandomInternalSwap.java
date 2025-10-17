@@ -1,7 +1,7 @@
 package algo.neighborhood;
 
-import solution.*;
 import java.util.*;
+import solution.*;
 
 public class RandomInternalSwap implements NeighborhoodOperator { //échange aléatoire de deux jobs sur une même machine
     //implements bc it's a neighborhood operator
@@ -31,7 +31,8 @@ public class RandomInternalSwap implements NeighborhoodOperator { //échange al�
             }
         }
         // if no machine has at least 2 jobs, return the same solution
-        if (candidateMachines.isEmpty()) {
+        if (candidateMachines.isEmpty()) 
+        {
             return neighbor;
         }
         

@@ -12,8 +12,9 @@ public class LAHCTest {
         System.out.println("║                      TEST - LAHC                           ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝\n");
 
-        // 4 jobs, 2 machines
-        Instance instance = createInstance();
+
+        // Créer une instance de test
+        Instance instance = createTestInstance();
         
         //LAHC avec BIBA
         BIBAHeuristic biba = new BIBAHeuristic();
@@ -69,39 +70,60 @@ public class LAHCTest {
         System.out.println("TOUS LES TESTS PASSÉS");
         System.out.println("=".repeat(50));
     }
-    
-    private static Instance createInstance() {
-        //4 jobs, 2 machines, release dates = 0
-        int[] releaseDates = {0, 0, 0, 0};
-        Instance instance = new Instance(4, 2, releaseDates);
+
+    private static Instance createTestInstance() {
+        System.out.println("Création instance: 6 jobs, 3 machines\n");
         
-        //processing times
-        int[][] p = {
-            {5, 6},  // J0
-            {3, 4},  // J1
-            {7, 5},  // J2
-            {4, 3}  // J3
+        int[] releaseDates = {0, 0, 0, 0, 0, 0};
+        Instance instance = new Instance(6, 3, releaseDates);
+        
+        // Processing times: variés car in veut créer des déséquilibres
+        int[][] processingTimes = {
+            {10, 8, 12},  // Job 0
+            {5, 6, 4},    // Job 1
+            {15, 10, 8},  // Job 2
+            {7, 9, 6},    // Job 3
+            {12, 11, 10}, // Job 4
+            {8, 7, 9}     // Job 5
         };
         
-        for (int j = 0; j < 4; j++) {
-            for (int m = 0; m < 2; m++) {
-                instance.setProcessingTime(j, m, p[j][m]);
+        for (int j = 0; j < 6; j++) {
+            for (int m = 0; m < 3; m++) {
+                instance.setProcessingTime(j, m, processingTimes[j][m]);
             }
         }
         
-        //setup times = 1 partout
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                for (int m = 0; m < 2; m++) {
-                    instance.setSetupTime(i, j, m, 1);
+        // Setup times: tous à 2 pour simplifier
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                for (int m = 0; m < 3; m++) {
+                    instance.setSetupTime(i, j, m, 2);
                 }
             }
         }
         
-        System.out.println("Instance créée: 4 jobs, 2 machines");
-        System.out.println("Release dates: tous à 0");
-        System.out.println("Processing times et setup times définis\n");
-        
         return instance;
     }
+    
+    private static Solution createUnbalancedSolution(Instance instance) {
+        Solution solution = new Solution(instance);
+        
+        //solution déséquilibrée (aka machine 0 surchargée)
+        // M0: J0, J2, J4 (charges: 10+15+12 = 37 + setups)
+        solution.getSchedule(0).addJob(instance.getJob(0));
+        solution.getSchedule(0).addJob(instance.getJob(2));
+        solution.getSchedule(0).addJob(instance.getJob(4));
+        
+        // M1: J1 (charge: 5)
+        solution.getSchedule(1).addJob(instance.getJob(1));
+        
+        // M2: J3, J5 (charges: 7+8 = 15)
+        solution.getSchedule(2).addJob(instance.getJob(3));
+        solution.getSchedule(2).addJob(instance.getJob(5));
+        
+        solution.calculateMakespan();
+        return solution;
+    }
+    
+    
 }

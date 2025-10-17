@@ -19,7 +19,7 @@ public class LAHCMetaheuristic {
     // Paramètres LAHC
     private int[] historyList;
     private int historyLength; // LH
-    private int maxIterations;
+    private int maxIterations; //todo ajustable ?
     private int nonImprovementLimit;
     
     // Solutions
@@ -39,8 +39,8 @@ public class LAHCMetaheuristic {
     public LAHCMetaheuristic(Heuristic heuristic, int historyLength) {
         this.heuristic = heuristic;
         this.localSearch = new LocalSearch();
-        this.historyLength = historyLength;
-        this.nonImprovementLimit = 1000;
+        this.historyLength = historyLength; // LH
+        this.nonImprovementLimit = 20; //1000 by default in the paper // TODO 
         this.random = new Random();
         
         // opérateurs de voisinage (50%-50%)
@@ -135,7 +135,6 @@ public class LAHCMetaheuristic {
     }
 
     //setters 
-
     public void setMaxIterations(int maxIterations) {
         this.maxIterations = maxIterations;
     }

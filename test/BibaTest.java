@@ -1,15 +1,15 @@
 package test;
 
+import algo.heuristic.*;
 import domain.*;
 import solution.*;
-import algo.heuristic.*;
 
 
 public class BibaTest {
     
     public static void main(String[] args) {
         System.out.println("╔════════════════════════════════════════════════════════════╗");
-        System.out.println("║         TEST - BIBA                                        ║");
+        System.out.println("║                    TEST - BIBA                             ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝\n");
         
         //instance: 4 jobs, 2 machines
