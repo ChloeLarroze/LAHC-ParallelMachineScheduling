@@ -7,14 +7,14 @@ import solution.Solution;
 import utils.InstanceReader;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("╔════════════════════════════════════════════════════════════╗");
         System.out.println("║    LAHC - Parallel Machine Scheduling Problem              ║");
         System.out.println("║    R|rⱼ, sᵢⱼₖ|Cmax                                         ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝\n");
 
-
-        Instance instance = InstanceReader.createPaperInstance(); //Instance du papier pour l'exemple, TODO à déplacer 
+        Instance instance = InstanceReader.readFromFile("./resources/Instance.txt");
+        // Instance instance = InstanceReader.createPaperInstance(); //Instance du papier pour l'exemple, TODO à déplacer
 
         // Résoudre avec LAHC
         solveLAHC(instance);

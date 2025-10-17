@@ -93,10 +93,16 @@ public class LAHCMetaheuristic {
             // a. Générer une solution voisine
             NeighborhoodOperator operator = operators.get(random.nextInt(operators.size())); //retourne soit 0 soit 1, donc 50%-50%
             //System.out.println("Using operator: " + operator.getClass().getSimpleName()); //debug
+
             Solution neighbor = operator.apply(currentSolution);
             
             // b. Améliorer avec recherche locale
-            neighbor = localSearch.improve(neighbor);
+            //neighbor = localSearch.improve(neighbor); //ISSUE HERE -> stuck in local optimum every time
+
+            //only improve some of neighbors to save time //FIX 
+            if (random.nextDouble() < 0.2) {
+                neighbor = localSearch.improve(neighbor);
+            }
             
             int currentCost = currentSolution.getMakespan();
             int neighborCost = neighbor.getMakespan();
@@ -106,6 +112,7 @@ public class LAHCMetaheuristic {
             int historyCost = historyList[historyIndex];
 
             if (neighborCost <= currentCost || neighborCost < historyCost) { //we could have used an "acceptSolution" method but whatever
+                //neighbor = localSearch.improve(neighbor); //FIX either only on the accepted or on some of em 
                 currentSolution = neighbor;
             }
             
@@ -166,4 +173,9 @@ public class LAHCMetaheuristic {
     public int getNonImprovementLimit() {
         return nonImprovementLimit;
     }
+
+    //make it adjustable (delete from constructor) TODO 
+    // public void setNonImprovementLimit(int nonImprovementLimit) {
+    //     this.nonImprovementLimit = nonImprovementLimit;
+    // }
 }
