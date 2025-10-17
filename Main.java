@@ -24,16 +24,16 @@ public class Main {
     /// FUNCTS =====================================================
     // Solve the instance using LAHC
     private static void solveLAHC(Instance instance) {
-        // Configuration
-        System.out.println("Configuration LAHC:");
-        System.out.println("  - Limite itérations: " + (instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2));
-        System.out.println("  - Limite non-amélioration: 1000\n");
 
         //on crée LAHC
         BIBAHeuristic biba = new BIBAHeuristic();
         LAHCMetaheuristic lahc = new LAHCMetaheuristic(biba);
 
-        //lahc.setMaxIterations(20); // TODO  : à passer en param
+        //PARAMS & CONFIG
+        System.out.println("Configuration LAHC:");
+        System.out.println("  - Limite itérations: " + (instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2));
+        System.out.println("  - Limite non-amélioration: " + lahc.getNonImprovementLimit() + "\n");
+        lahc.setMaxIterations(5); // TODO  : à passer en param
         
         System.out.println("=".repeat(60));
         System.out.println("DÉBUT RÉSOLUTION");
@@ -47,6 +47,9 @@ public class Main {
         
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
+
+        // if (executionTime != maxExecutionTime) {
+        // }
         
         // AFFICHER
         System.out.println("\n" + "=".repeat(60));

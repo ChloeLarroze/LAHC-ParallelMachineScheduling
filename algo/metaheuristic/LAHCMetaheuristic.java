@@ -40,7 +40,7 @@ public class LAHCMetaheuristic {
         this.heuristic = heuristic;
         this.localSearch = new LocalSearch();
         this.historyLength = historyLength; // LH
-        this.nonImprovementLimit = 1000; //1000 by default in the paper ? // TODO 
+        this.nonImprovementLimit = 20; //1000 by default in the paper ? // TODO 
         this.random = new Random();
         
         // opérateurs de voisinage (50%-50%)
@@ -62,23 +62,34 @@ public class LAHCMetaheuristic {
         // 2. Initialiser la liste historique
         historyList = new int[historyLength];
         Arrays.fill(historyList, initialMakespan);
+
+
+        //FIX with iteration time rather than max time ?
+        //time limit based on n × m / 2 seconds
+        long timeLimitMs = (long) (instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2.0 * 1000 ); //in ms  
+        long startTime = System.currentTimeMillis();
         
         // 3. Calculer le nombre maximum d'itérations si non défini
         if (maxIterations == 0) {
             // dépend de la taille de l'instance
-            maxIterations = instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2; // see paper TODO 
+            maxIterations = instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2; // see paper TODO
         }
-        
+
         // 4. Boucle principale LAHC
         iterationCount = 0;
         lastImprovementIteration = 0;
         int nonImprovementCount = 0;
-        
         System.out.println("LAHC with " + maxIterations + " max iterations...");
-        
-        while (iterationCount < maxIterations && nonImprovementCount < nonImprovementLimit) {
+
+
+        //FIX MaxIter discrete or time-based ? TODO + add as a param 
+        //while (iterationCount < maxIterations && nonImprovementCount < nonImprovementLimit)
+        while ((System.currentTimeMillis() - startTime) < timeLimitMs  && nonImprovementCount < nonImprovementLimit)  //&& iterationCount < maxIterations
+        {
             iterationCount++;
-            
+            //debug 
+            System.out.println("Iteration " + iterationCount + ": " + (System.currentTimeMillis() - startTime) + " ms");
+
             // a. Générer une solution voisine
             NeighborhoodOperator operator = operators.get(random.nextInt(operators.size())); //retourne soit 0 soit 1, donc 50%-50%
             //System.out.println("Using operator: " + operator.getClass().getSimpleName()); //debug
@@ -122,9 +133,10 @@ public class LAHCMetaheuristic {
                                 bestSolution.getMakespan(), currentCost);
             }
         }
-        
+        long totalTime = System.currentTimeMillis() - startTime;
         System.out.println("\nLAHC finished:");
         System.out.println("  Total iterations: " + iterationCount);
+        System.out.println("  Total time: " + (totalTime / 1000.0) + " s");
         System.out.println("  Last improvement at iteration: " + lastImprovementIteration);
         System.out.println("  Initial makespan: " + initialMakespan);
         System.out.println("  Final makespan: " + bestSolution.getMakespan());
@@ -149,5 +161,9 @@ public class LAHCMetaheuristic {
 
     public Solution getCurrentSolution() {
         return currentSolution;
+    }
+
+    public int getNonImprovementLimit() {
+        return nonImprovementLimit;
     }
 }
