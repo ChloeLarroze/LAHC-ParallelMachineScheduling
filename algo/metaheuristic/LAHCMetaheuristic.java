@@ -40,7 +40,7 @@ public class LAHCMetaheuristic {
         this.heuristic = heuristic;
         this.localSearch = new LocalSearch();
         this.historyLength = historyLength; // LH
-        this.nonImprovementLimit = 20; //1000 by default in the paper // TODO 
+        this.nonImprovementLimit = 1000; //1000 by default in the paper ? // TODO 
         this.random = new Random();
         
         // opérateurs de voisinage (50%-50%)
@@ -66,7 +66,7 @@ public class LAHCMetaheuristic {
         // 3. Calculer le nombre maximum d'itérations si non défini
         if (maxIterations == 0) {
             // dépend de la taille de l'instance
-            maxIterations = instance.getNumberOfJobs() * instance.getNumberOfMachines() * 100; // ajustable TODO ? 
+            maxIterations = instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2; // see paper TODO 
         }
         
         // 4. Boucle principale LAHC

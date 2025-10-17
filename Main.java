@@ -4,86 +4,36 @@ import domain.Instance;
 import domain.Job;
 import solution.Schedule;
 import solution.Solution;
+import utils.InstanceReader;
 
 public class Main {
-
     public static void main(String[] args) {
         System.out.println("╔════════════════════════════════════════════════════════════╗");
         System.out.println("║    LAHC - Parallel Machine Scheduling Problem              ║");
         System.out.println("║    R|rⱼ, sᵢⱼₖ|Cmax                                         ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝\n");
 
-        
-        Instance instance = createPaperInstance(); //Instance du papier pour l'exemple, TODO
-        
+
+        Instance instance = InstanceReader.createPaperInstance(); //Instance du papier pour l'exemple, TODO à déplacer 
+
         // Résoudre avec LAHC
         solveLAHC(instance);
     }
 
-    private static Instance createPaperInstance() {
-        System.out.println("exemple du papier\n");
-        
-        //r_j(Table 1)
-        int[] releaseDates = {3, 5, 1, 0, 3};
-        Instance instance = new Instance(5, 2, releaseDates);
-        
-        // p_ij (Table 1 as well)
-        int[][] processingTimes = {
-            {2, 2}, // Job 0: p01=2, p02=2
-            {1, 4}, // Job 1: p11=1, p12=4
-            {2, 5}, // Job 2: p21=2, p22=5
-            {6, 2}, // Job 3: p31=6, p32=2
-            {4, 1}  // Job 4: p41=4, p42=1
-        };
-        
-        for (int j = 0; j < 5; j++) {
-            for (int m = 0; m < 2; m++) {
-                instance.setProcessingTime(j, m, processingTimes[j][m]);
-            }
-        }
-        
-        //s_ij1 (Table 2, left)
-        int[][] setupM0 = { 
-            {9, 5, 1, 2, 3},
-            {7, 3, 5, 1, 6},
-            {3, 5, 7, 2, 7},
-            {5, 3, 3, 1, 2},
-            {1, 1, 2, 2, 3}
-        };
-        
-        // s_ij2 (Table 2, right)
-        int[][] setupM1 = {
-            {1, 10, 8, 3, 4},
-            {4, 2, 2, 1, 5},
-            {2, 1, 2, 5, 2},
-            {5, 2, 1, 4, 3},
-            {4, 6, 1, 3, 1}
-        };
-        
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                instance.setSetupTime(i, j, 0, setupM0[i][j]);
-                instance.setSetupTime(i, j, 1, setupM1[i][j]);
-            }
-        }
-        
-        System.out.println("OK - instance créée");
-        return instance;
-    }
 
-
-
-
+    /// FUNCTS =====================================================
     // Solve the instance using LAHC
     private static void solveLAHC(Instance instance) {
         // Configuration
         System.out.println("Configuration LAHC:");
-        System.out.println("  - Limite itérations: " + (instance.getNumberOfJobs() * instance.getNumberOfMachines() * 100));
+        System.out.println("  - Limite itérations: " + (instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2));
         System.out.println("  - Limite non-amélioration: 1000\n");
 
         //on crée LAHC
         BIBAHeuristic biba = new BIBAHeuristic();
         LAHCMetaheuristic lahc = new LAHCMetaheuristic(biba);
+
+        //lahc.setMaxIterations(20); // TODO  : à passer en param
         
         System.out.println("=".repeat(60));
         System.out.println("DÉBUT RÉSOLUTION");
