@@ -20,7 +20,9 @@ public class BenchmarkTest {
         }
         
         for (int i = 0; i < 100; i++) {
-            Instance instance = InstanceReader.createRandomInstance(5, 2, 10, 5, 0.5);
+            int randomJobNumber = 1 + (int)(Math.random() * 10); // between 1 and 10
+            int randomMachineNumber = 1 + (int)(Math.random() * 5); // between 1 and 5
+            Instance instance = InstanceReader.createRandomInstance(randomJobNumber, randomMachineNumber, 10, 5, 0.5);
             solveLAHC(instance, i);
         }
     }
