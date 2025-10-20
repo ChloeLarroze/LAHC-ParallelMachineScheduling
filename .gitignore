@@ -28,3 +28,4 @@ replay_pid*
 rough.txt
 .vscode/
 .bin/   
+.venv/

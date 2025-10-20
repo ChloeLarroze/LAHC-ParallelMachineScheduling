@@ -29,7 +29,9 @@ public class LAHCMetaheuristic {
     // stats 
     private int iterationCount;
     private int lastImprovementIteration;
-    
+    private int initialMakespan;
+    private int bestMakespan;
+
     //default constructor with heuristic and default history length
     public LAHCMetaheuristic(Heuristic heuristic) {
         this(heuristic, 30); // LH = 30 selon le papier //PARAM  TODO ajustable ?
@@ -55,17 +57,16 @@ public class LAHCMetaheuristic {
         System.out.println("Generating initial solution with BIBA heuristic...");
         currentSolution = heuristic.buildInitialSolution(instance);
         bestSolution = currentSolution.copy(); //initial best solution = initial solution
-        
-        int initialMakespan = bestSolution.getMakespan();
+
+        initialMakespan = bestSolution.getMakespan();
+        bestMakespan = initialMakespan;
         System.out.println("Initial makespan: " + initialMakespan);
         
         // 2. Initialiser la liste historique
         historyList = new int[historyLength];
         Arrays.fill(historyList, initialMakespan);
 
-
-        //FIX with iteration time rather than max time ?
-        //time limit based on n × m / 2 seconds
+        //FIX with iteration time rather than max time n*m/2 *1000 
         long timeLimitMs = (long) (instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2.0 * 1000 ); //in ms  
         long startTime = System.currentTimeMillis();
         
@@ -119,6 +120,7 @@ public class LAHCMetaheuristic {
             // d. Mettre à jour la meilleure solution
             if (neighborCost < bestSolution.getMakespan()) {
                 bestSolution = neighbor.copy();
+                bestMakespan = neighborCost;
                 lastImprovementIteration = iterationCount;
                 nonImprovementCount = 0;
                 
@@ -174,8 +176,25 @@ public class LAHCMetaheuristic {
         return nonImprovementLimit;
     }
 
+    public int getInitialMakespan() {
+        return initialMakespan;
+    }
+
+    public int getBestMakespan() {
+        return bestMakespan;
+    }
+
     //make it adjustable (delete from constructor) TODO 
     // public void setNonImprovementLimit(int nonImprovementLimit) {
     //     this.nonImprovementLimit = nonImprovementLimit;
     // }
+
+    //stats getters
+    public int getIterationCount() {
+        return iterationCount;
+    }
+
+    public int getLastImprovementIteration() {
+        return lastImprovementIteration;
+    }
 }

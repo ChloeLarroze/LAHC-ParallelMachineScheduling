@@ -14,8 +14,9 @@ public class Main {
         System.out.println("║    R|rⱼ, sᵢⱼₖ|Cmax                                         ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝\n");
 
-        Instance instance = InstanceReader.readFromFile("./resources/Instance.txt");
+        //Instance instance = InstanceReader.readFromFile("./resources/Instance.txt");
         // Instance instance = InstanceReader.createPaperInstance(); //Instance du papier pour l'exemple, TODO à déplacer
+        Instance instance = InstanceReader.createRandomInstance(5, 2, 10, 5, 0.5);
 
         // Résoudre avec LAHC
         solveLAHC(instance);
