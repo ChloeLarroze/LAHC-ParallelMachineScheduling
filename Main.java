@@ -4,6 +4,7 @@ import domain.Instance;
 import domain.Job;
 import solution.Schedule;
 import solution.Solution;
+import utils.Gantt;
 import utils.InstanceReader;
 
 public class Main {
@@ -73,6 +74,12 @@ public class Main {
         System.out.println("  Jobs: " + instance.getNumberOfJobs());
         System.out.println("  Machines: " + instance.getNumberOfMachines());
         System.out.println("  Makespan final: " + solution.getMakespan());
+
+        // 4. Gantt
+        System.out.println("\n" + "─".repeat(60));
+        System.out.println("DIAGRAMME DE GANTT");
+        System.out.println("─".repeat(60) + "\n");
+        Gantt.printGantt(solution);
     }
     
     //print helper funct 
