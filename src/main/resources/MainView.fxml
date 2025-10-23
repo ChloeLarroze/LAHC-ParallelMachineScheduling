@@ -1,0 +1,136 @@
+<!-- File: gui/MainView.fxml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.2" 
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.scheduling.lahc.gui.controllers.MainController"
+            prefHeight="800.0" prefWidth="1200.0">
+    
+    <!-- TOP: Barre de titre -->
+    <top>
+        <VBox style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+            <Label text="LAHC - Parallel Machine Scheduling" 
+                   style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+            <Label text="R|rⱼ, sᵢⱼₖ|Cₘₐₓ" 
+                   style="-fx-text-fill: #ecf0f1; -fx-font-size: 14;"/>
+        </VBox>
+    </top>
+    
+    <!-- LEFT: Panneau de contrôle -->
+    <left>
+        <VBox spacing="15" style="-fx-background-color: #ecf0f1; -fx-padding: 20;" 
+              prefWidth="320">
+            
+            <!-- Section: Chargement instance -->
+            <TitledPane text="📁 Instance" collapsible="false">
+                <VBox spacing="10">
+                    <Button fx:id="loadFileButton" text="Charger fichier..." 
+                            onAction="#handleLoadFile" maxWidth="Infinity"
+                            style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    
+                    <Separator/>
+                    
+                    <Label text="Ou générer aléatoirement:"/>
+                    <HBox spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Jobs:"/>
+                            <TextField fx:id="jobsField" text="20" prefWidth="80"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Machines:"/>
+                            <TextField fx:id="machinesField" text="4" prefWidth="80"/>
+                        </VBox>
+                    </HBox>
+                    
+                    <Button fx:id="generateRandomButton" text="Générer instance" 
+                            onAction="#handleGenerateRandom" maxWidth="Infinity"
+                            style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+                    
+                    <Separator/>
+                    
+                    <Button text="📋 Exemple du papier" onAction="#handleLoadPaperExample" 
+                            maxWidth="Infinity"
+                            style="-fx-background-color: #16a085; -fx-text-fill: white;"/>
+                </VBox>
+            </TitledPane>
+            
+            <!-- Section: Paramètres LAHC -->
+            <TitledPane text="⚙️ Paramètres LAHC" collapsible="false">
+                <VBox spacing="10">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Longueur historique (LH):" prefWidth="150"/>
+                        <Spinner fx:id="lhSpinner" prefWidth="100" editable="true"/>
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Itérations max:" prefWidth="150"/>
+                        <Spinner fx:id="iterationsSpinner" prefWidth="100" editable="true"/>
+                    </HBox>
+                    
+                    <Label text="Optimisé selon ParamILS" 
+                           style="-fx-font-size: 10; -fx-text-fill: gray;"/>
+                </VBox>
+            </TitledPane>
+            
+            <!-- Section: Exécution -->
+            <TitledPane text="▶️ Exécution" collapsible="false">
+                <VBox spacing="10">
+                    <Button fx:id="runLAHCButton" text="🚀 Lancer LAHC" 
+                            onAction="#handleRunLAHC" maxWidth="Infinity"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; 
+                                   -fx-font-size: 14; -fx-font-weight: bold; -fx-padding: 10;"/>
+                    
+                    <Button fx:id="stopButton" text="⏹ Arrêter" 
+                            onAction="#handleStop" maxWidth="Infinity"
+                            style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                    
+                    <ProgressBar fx:id="progressBar" prefWidth="Infinity" progress="0"/>
+                    
+                    <Label fx:id="statusLabel" text="Prêt" 
+                           style="-fx-font-size: 11; -fx-text-fill: gray;"/>
+                </VBox>
+            </TitledPane>
+            
+            <!-- Section: Résultats rapides -->
+            <TitledPane text="📊 Résultats" collapsible="false">
+                <VBox spacing="8">
+                    <Label fx:id="makespanLabel" text="Makespan: -" 
+                           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                    <Label fx:id="executionTimeLabel" text="Temps: -"/>
+                    <Label fx:id="improvementLabel" text="Amélioration: -"/>
+                </VBox>
+            </TitledPane>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            
+            <!-- Footer -->
+            <Label text="© 2025 LAHC Implementation" 
+                   style="-fx-font-size: 9; -fx-text-fill: gray; -fx-alignment: center;"/>
+        </VBox>
+    </left>
+    
+    <!-- CENTER: Résultats et visualisations -->
+    <center>
+        <TabPane fx:id="resultTabPane" tabClosingPolicy="UNAVAILABLE">
+            
+            <!-- Tab 1: Logs -->
+            <Tab text="📝 Logs">
+                <VBox spacing="10" style="-fx-padding: 15;">
+                    <Label text="Journal d'exécution" 
+                           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                    <TextArea fx:id="logArea" editable="false" 
+                              style="-fx-font-family: 'Courier New'; -fx-font-size: 11;"
+                              VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </Tab>
+            
+            <!-- Tab 4: Solution détaillée -->
+            <Tab text="📋 Solution">
+                <ScrollPane fitToWidth="true">
+                    <VBox spacing="10" style="-fx-padding: 15;">
