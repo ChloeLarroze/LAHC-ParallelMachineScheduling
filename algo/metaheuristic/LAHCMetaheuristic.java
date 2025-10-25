@@ -42,7 +42,7 @@ public class LAHCMetaheuristic {
         this.heuristic = heuristic;
         this.localSearch = new LocalSearch();
         this.historyLength = historyLength; // LH
-        this.nonImprovementLimit = 20; //1000 by default in the paper ? // TODO 
+        this.nonImprovementLimit = 1000; //by default in the paper 
         this.random = new Random();
         
         // opérateurs de voisinage (50%-50%)
@@ -70,18 +70,11 @@ public class LAHCMetaheuristic {
         long timeLimitMs = (long) (instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2.0 * 1000 ); //in ms  
         long startTime = System.currentTimeMillis();
         
-        // 3. Calculer le nombre maximum d'itérations si non défini
-        if (maxIterations == 0) {
-            // dépend de la taille de l'instance
-            maxIterations = instance.getNumberOfJobs() * instance.getNumberOfMachines() / 2; // see paper TODO
-        }
 
-        // 4. Boucle principale LAHC
+        // 3. Boucle principale LAHC
         iterationCount = 0;
         lastImprovementIteration = 0;
         int nonImprovementCount = 0;
-        System.out.println("LAHC with " + maxIterations + " max iterations...");
-
 
         //FIX MaxIter discrete or time-based ? TODO + add as a param 
         //while (iterationCount < maxIterations && nonImprovementCount < nonImprovementLimit)
@@ -101,7 +94,7 @@ public class LAHCMetaheuristic {
             //neighbor = localSearch.improve(neighbor); //ISSUE HERE -> stuck in local optimum every time
 
             //only improve some of neighbors to save time //FIX 
-            if (random.nextDouble() < 0.2) {
+            if (random.nextDouble() < 1.0) { //always for now
                 neighbor = localSearch.improve(neighbor);
             }
             
@@ -133,7 +126,8 @@ public class LAHCMetaheuristic {
             }
             
             // e. Mettre à jour la liste historique
-            historyList[iterationCount % historyLength] = neighborCost;
+            historyList[iterationCount % historyLength] = currentSolution.getMakespan();
+            //historyList[iterationCount % historyLength] = neighborCost;
             
             // Affichage périodique
             if (iterationCount % 1000 == 0) {

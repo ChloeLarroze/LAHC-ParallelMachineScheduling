@@ -16,7 +16,11 @@ public class Main {
 
         //Instance instance = InstanceReader.readFromFile("./resources/Instance.txt");
         // Instance instance = InstanceReader.createPaperInstance(); //Instance du papier pour l'exemple, TODO à déplacer
-        Instance instance = InstanceReader.createRandomInstance(5, 2, 10, 5, 0.5);
+
+        int randomJobNumber = 1 + (int)(Math.random() * 10); // between 1 and 10
+        int randomMachineNumber = 1 + (int)(Math.random() * 5); // between 1 and 5
+        Instance instance = InstanceReader.createRandomInstance(randomJobNumber, randomMachineNumber, 10, 5, 0.5);
+        //Instance instance = InstanceReader.createRandomInstance(5, 2, 10, 5, 0.5);
 
         // Résoudre avec LAHC
         solveLAHC(instance);

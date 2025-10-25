@@ -23,14 +23,34 @@ public class LocalSearch {
     public Solution improve(Solution solution) {
         Solution improved = solution.copy();
         boolean improvement;
+        int iter = 0;
+        int lastMakespan = improved.getMakespan();
         
-        //tant qu'on trouve une amélioration, on continue
         do {
             improvement = applyOperators(improved);
+            int newMakespan = improved.getMakespan();
+            iter++;
+
+            System.out.printf("[LocalSearch] Iter %d → Makespan: %d (Δ=%d)%n", 
+                iter, newMakespan, lastMakespan - newMakespan);
+
+            if (newMakespan >= lastMakespan && !improvement) {
+                System.out.println("[LocalSearch] No further improvement found.");
+            }
+
+            lastMakespan = newMakespan;
+
+            // Sécurité : limite de cycles pour éviter boucle infinie
+            if (iter > 1000) {
+                System.out.println("[LocalSearch] Stuck in local loop — forcing exit");
+                break;
+            }
+
         } while (improvement);
         
         return improved;
     }
+
     
     //applique les 5 opérateurs dans l'ordre et retourne true si au moins un a amélioré la solution
     private boolean applyOperators(Solution solution) {
