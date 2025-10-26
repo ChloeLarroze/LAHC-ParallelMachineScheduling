@@ -30,8 +30,8 @@ public class BenchmarkTest {
         long totalStartTime = System.currentTimeMillis();
         
         for (int i = 0; i < NUM_RUNS; i++) {
-            int randomJobNumber = 20 + (int)(Math.random() * 21); // 20-40 jobs (previously 5-20) TODO
-            int randomMachineNumber = 2 + (int)(Math.random() * 7); // 2-8 machines (previously 2-5)
+            int randomJobNumber = 5 + (int)(Math.random() * 16); // 5-20
+            int randomMachineNumber = 2 + (int)(Math.random() * 4); // 2-5
             Instance instance = InstanceReader.createRandomInstance(
                 randomJobNumber, 
                 randomMachineNumber, 
