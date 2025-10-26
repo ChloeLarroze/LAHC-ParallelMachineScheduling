@@ -25,6 +25,7 @@ public class LocalSearch {
         boolean improvement;
         int iter = 0;
         int lastMakespan = improved.getMakespan();
+        int MaxIterLocal = 100; //sécurité pour éviter boucle infinie
         
         do {
             improvement = applyOperators(improved);
@@ -41,7 +42,7 @@ public class LocalSearch {
             lastMakespan = newMakespan;
 
             // Sécurité : limite de cycles pour éviter boucle infinie
-            if (iter > 1000) {
+            if (iter > MaxIterLocal) {
                 //System.out.println("[LocalSearch] Stuck in local loop — forcing exit");
                 break;
             }

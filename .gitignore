@@ -27,3 +27,5 @@ replay_pid*
 # IDE files
 .bin/   
 .venv/
+rough.txt
+resources/analysis.py

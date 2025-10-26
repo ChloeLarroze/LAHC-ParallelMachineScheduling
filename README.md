@@ -3,7 +3,6 @@ Implementation of the Late Acceptance Hill Climbing metaheuristic for unrelated 
 
 ## Prérequis
 - **Java 11 ou supérieur** avec JavaFX (le projet utilise Zulu JDK 25 qui inclut JavaFX)
-- **macOS, Linux ou Windows** (testé sur macOS Intel)
 - Terminal/ligne de commande
 
 ## Lancement de l'Application
