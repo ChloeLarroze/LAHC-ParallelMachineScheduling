@@ -1,6 +1,8 @@
 # LAHC-ParallelMachineScheduling
 Implementation of the Late Acceptance Hill Climbing metaheuristic for unrelated parallel machine scheduling problems with release dates and sequence-dependent setup times (R|rⱼ, sᵢⱼₖ|Cₘₐₓ).
 
+Pour plus d'informations, consulter le rapport complet: [Rapport](https://github.com/ChloeLarroze/LAHC-ParallelMachineScheduling/blob/main/report.pdf)
+
 ## Prérequis
 - **Java 11 ou supérieur** avec JavaFX (le projet utilise Zulu JDK 25 qui inclut JavaFX)
 - Terminal/ligne de commande
