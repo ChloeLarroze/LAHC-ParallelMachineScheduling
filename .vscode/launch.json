@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch JavaFX GUI",
+      "request": "launch",
+      "mainClass": "MainFX",
+      "vmArgs": "--enable-native-access=ALL-UNNAMED -XstartOnFirstThread --module-path /Users/chloelarroze/doc/S9/Java/LAHC-ParallelMachineScheduling/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
+      "projectName": "LAHC-ParallelMachineScheduling_b520be3"
+    }
+  ]
+}

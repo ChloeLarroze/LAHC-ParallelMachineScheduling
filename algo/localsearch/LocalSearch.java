@@ -31,18 +31,18 @@ public class LocalSearch {
             int newMakespan = improved.getMakespan();
             iter++;
 
-            System.out.printf("[LocalSearch] Iter %d → Makespan: %d (Δ=%d)%n", 
-                iter, newMakespan, lastMakespan - newMakespan);
+            //debug 
+            //System.out.printf("[LocalSearch] Iter %d → Makespan: %d (Δ=%d)%n", iter, newMakespan, lastMakespan - newMakespan);
 
-            if (newMakespan >= lastMakespan && !improvement) {
-                System.out.println("[LocalSearch] No further improvement found.");
-            }
+            // if (newMakespan >= lastMakespan && !improvement) {
+            //     System.out.println("[LocalSearch] No further improvement found.");
+            // }
 
             lastMakespan = newMakespan;
 
             // Sécurité : limite de cycles pour éviter boucle infinie
             if (iter > 1000) {
-                System.out.println("[LocalSearch] Stuck in local loop — forcing exit");
+                //System.out.println("[LocalSearch] Stuck in local loop — forcing exit");
                 break;
             }
 
