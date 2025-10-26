@@ -82,25 +82,27 @@ public class Schedule {
         Job previousJob = null;
         
         for (Job job : jobSequence) {
-            //le job ne peut commencer avant sa release date
-            int startTime = Math.max(currentTime, job.getReleaseDate());
+            //le setup commence après la fin du job précédent
+            int setupStartTime = Math.max(currentTime, job.getReleaseDate());
             
-            //temps de setup
+            //get setup and processing times
             int setupTime = instance.getSetupTime(previousJob, job, machine);
-            
-            //temps de traitement
             int processingTime = instance.getProcessingTime(job, machine);
             
-            //enregistrement
-            startTimes.put(job, startTime);
-            int endTime = startTime + setupTime + processingTime;
+            //p_jk starts after setup completes FIX here
+            int processingStartTime = setupStartTime + setupTime;
+            
+            //record time(startTime is when processing begins)
+            startTimes.put(job, processingStartTime);
+            int endTime = processingStartTime + processingTime;
             endTimes.put(job, endTime);
             
+            //update pour le next job
             currentTime = endTime;
             previousJob = job;
         }
 
-        //la completion time est le temps de fin du dernier job
+        //when the last job finishes => completionTime est returned 
         completionTime = currentTime;
     }
     
